@@ -187,7 +187,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--surface);color:var(--text
   <div class="app">
     <div class="topbar">
       <div class="logo">🏫 BMI School</div><div class="sp"></div>
-      <div class="tb-user"><div class="av av-t">ค</div><span>ครูสมหมาย</span><button class="lo-btn" onclick="logout()">ออกจากระบบ</button></div>
+      <div class="tb-user"><div class="av av-t">ค</div><span>คุณครู</span><button class="lo-btn" onclick="logout()">ออกจากระบบ</button></div>
     </div>
     <div class="main">
       <div class="sb">
@@ -615,7 +615,7 @@ function tP(id,el){document.querySelectorAll('#page-teacher .pn').forEach(p=>p.c
 function sP(id,el){document.querySelectorAll('#page-student .pn').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('#page-student .ni').forEach(n=>n.classList.remove('active'));el.classList.add('active');if(id==='s-adv')rAdv();if(id==='s-hist')rHist();if(id==='s-prof')rProf();if(id==='s-home')rSHome();if(id==='s-fit')rSFit();}
 
 function authTab(r){document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&r==='t')||(i===1&&r==='s')));document.getElementById('a-t').style.display=r==='t'?'block':'none';document.getElementById('a-s').style.display=r==='s'?'block':'none';}
-function loginT(){var u=document.getElementById('tu').value.trim();var p=document.getElementById('tp').value;var e=document.getElementById('te');if(u==='teacher'&&p===TPW){e.style.display='none';currentUser={role:'t',name:'ครูสมหมาย'};goPage('page-teacher');rDash();}else e.style.display='block';}
+function loginT(){var u=document.getElementById('tu').value.trim();var p=document.getElementById('tp').value;var e=document.getElementById('te');if(u==='teacher'&&p===TPW){e.style.display='none';currentUser={role:'t',name:'คุณครู'};goPage('page-teacher');rDash();}else e.style.display='block';}
 function loginS(){var u=document.getElementById('su').value.trim();var p=document.getElementById('sp2').value;var e=document.getElementById('se');var s=students.find(x=>x.id===u&&x.pass===p);if(s){e.style.display='none';currentUser={role:'s',id:s.id};loadSUI(s);goPage('page-student');}else e.style.display='block';}
 function regS(){var n=document.getElementById('rn').value.trim();var i=document.getElementById('ri').value.trim();var c=document.getElementById('rc').value;var w=parseFloat(document.getElementById('rw').value)||0;var h=parseFloat(document.getElementById('rh').value)||0;var p=document.getElementById('rp').value;var e=document.getElementById('re');if(!n||!i||!p){e.textContent='กรุณากรอกข้อมูลให้ครบ';e.style.display='block';return;}if(students.find(s=>s.id===i)){e.textContent='เลขประจำตัวนี้มีในระบบแล้ว';e.style.display='block';return;}e.style.display='none';var hist=w&&h?[{date:new Date().toISOString().slice(0,10),w:w,h:h}]:[];students.push({id:i,name:n,room:c,weight:w,height:h,pass:p,history:hist});currentUser={role:'s',id:i};loadSUI(students[students.length-1]);goPage('page-student');}
 function logout(){currentUser=null;goPage('page-login');}
