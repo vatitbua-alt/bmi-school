@@ -598,7 +598,25 @@ function fillRooms(){
   }
 }
 function roomSort(a,b){return ROOMS.indexOf(a)-ROOMS.indexOf(b);}
-var students=[
+var students=[const API = 'วาง_Web_app_URL_ตรงนี้';
+
+async function loadData() {
+  try {
+    const res = await fetch(API);
+    const db = await res.json();
+    if (db.students) students = db.students;
+    if (db.fitTests) fitTests = db.fitTests;
+  } catch (err) { console.error('โหลดข้อมูลไม่สำเร็จ', err); }
+}
+
+async function saveData() {
+  try {
+    await fetch(API, {
+      method: 'POST',
+      body: JSON.stringify({ students, fitTests })
+    });
+  } catch (err) { console.error('บันทึกไม่สำเร็จ', err); }
+}
   {id:'6500001',name:'ด.ช. กิตติ สุขดี',room:'ม.2/1',weight:52,height:165,pass:'1234',advice:'คุณครูเห็นว่าหนูดูแลสุขภาพได้ดีมาก รักษาการนอนให้ตรงเวลาต่อไปนะครับ 👍',history:[{date:'2025-01-10',w:50,h:164},{date:'2025-03-15',w:51,h:165},{date:'2025-06-01',w:52,h:165}]},
   {id:'6500002',name:'ด.ญ. มินตรา ใจดี',room:'ม.2/1',weight:62,height:155,pass:'1234',history:[{date:'2025-01-10',w:59,h:155},{date:'2025-03-15',w:61,h:155},{date:'2025-06-01',w:62,h:155}]},
   {id:'6500003',name:'ด.ช. ภาณุ รักเรียน',room:'ม.2/1',weight:40,height:163,pass:'1234',history:[{date:'2025-03-15',w:39,h:162},{date:'2025-06-01',w:40,h:163}]},
