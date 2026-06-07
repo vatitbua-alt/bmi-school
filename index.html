@@ -1155,7 +1155,8 @@ function importCSV(){
 }
 
 // ── เรียกตอนเริ่มต้น เพื่อเติม dropdown ห้องเรียน ──
-fillRooms();
+loadData().then(function(){ fillRooms(); });
+function addStu(){ /* ...โค้ดเดิม... */ ; saveData(); }
 </script>
 </body>
 </html>
