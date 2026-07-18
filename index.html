@@ -1990,7 +1990,7 @@ function sumRow(s){return [s.t,s.lo,s.ok,s.ow,s.ob,s.nd,s.pctOk+'%',s.avg];}
 // (1) สรุปรายชั้นเรียน
 function expBmiGrade(){
   var g=groupBy(function(s){return gradeOf(s.room);});
-  var rows=[['แบบสรุปผล BMI รายชั้นเรียน — โรงเรียนบ้านหนองหญ้าปล้อง'],['วันที่ออกรายงาน',new Date().toLocaleDateString('th-TH')],[],['ชั้นเรียน'].concat(SUM_HEAD)];
+  var rows=[['แบบสรุปผล BMI รายชั้นเรียน — '+(schoolInfo.name||'โรงเรียน')],['วันที่ออกรายงาน',new Date().toLocaleDateString('th-TH')],[],['ชั้นเรียน'].concat(SUM_HEAD)];
   Object.keys(g).sort(gradeSort).forEach(function(k){rows.push([k].concat(sumRow(bmiSummary(g[k]))));});
   rows.push(['รวมทั้งโรงเรียน'].concat(sumRow(bmiSummary(students))));
   downloadCSV(rows,'สรุป_BMI_รายชั้นเรียน.csv');
@@ -1998,14 +1998,14 @@ function expBmiGrade(){
 // (2) สรุปรายห้อง
 function expBmiRoom(){
   var g=groupBy(function(s){return s.room;});
-  var rows=[['แบบสรุปผล BMI รายห้องเรียน — โรงเรียนบ้านหนองหญ้าปล้อง'],['วันที่ออกรายงาน',new Date().toLocaleDateString('th-TH')],[],['ห้องเรียน'].concat(SUM_HEAD)];
+  var rows=[['แบบสรุปผล BMI รายห้องเรียน — '+(schoolInfo.name||'โรงเรียน')],['วันที่ออกรายงาน',new Date().toLocaleDateString('th-TH')],[],['ห้องเรียน'].concat(SUM_HEAD)];
   Object.keys(g).sort(roomSort).forEach(function(k){rows.push([k].concat(sumRow(bmiSummary(g[k]))));});
   rows.push(['รวมทั้งโรงเรียน'].concat(sumRow(bmiSummary(students))));
   downloadCSV(rows,'สรุป_BMI_รายห้อง.csv');
 }
 // (3) สรุปรายบุคคล
 function expBmiIndividual(){
-  var rows=[['แบบสรุปผล BMI รายบุคคล — โรงเรียนบ้านหนองหญ้าปล้อง'],['วันที่ออกรายงาน',new Date().toLocaleDateString('th-TH')],[],
+  var rows=[['แบบสรุปผล BMI รายบุคคล — '+(schoolInfo.name||'โรงเรียน')],['วันที่ออกรายงาน',new Date().toLocaleDateString('th-TH')],[],
     ['ลำดับ','เลขประจำตัว','ชื่อ-นามสกุล','ชั้น','ห้อง','เพศ','อายุ (ปี)','น้ำหนัก (กก.)','ส่วนสูง (ซม.)','BMI','สถานะ']];
   var list=students.slice().sort(function(a,b){var r=roomSort(a.room,b.room);return r!==0?r:a.name.localeCompare(b.name,'th');});
   list.forEach(function(s,i){
@@ -2061,7 +2061,7 @@ function printBmiReport(){
     '</style></head><body>'+
     '<div class="noprint" style="text-align:center;margin:10px 0"><button onclick="window.print()" style="padding:8px 18px;font-size:14px;cursor:pointer">🖨️ พิมพ์ / บันทึกเป็น PDF</button></div>'+
     '<h1>แบบสรุปผลดัชนีมวลกาย (BMI) ของนักเรียน</h1>'+
-    '<div class="sub">โรงเรียนบ้านหนองหญ้าปล้อง · ออกรายงานวันที่ '+today+' · นักเรียนทั้งหมด '+students.length+' คน</div>'+
+    '<div class="sub">'+(schoolInfo.name||'โรงเรียน')+' · ออกรายงานวันที่ '+today+' · นักเรียนทั้งหมด '+students.length+' คน</div>'+
     pieBlock+
     sumTable('สรุปรายชั้นเรียน',gradeG,gradeSort,'ชั้นเรียน')+
     sumTable('สรุปรายห้องเรียน',roomG,roomSort,'ห้องเรียน')+
